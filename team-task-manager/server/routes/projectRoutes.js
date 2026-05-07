@@ -1,43 +1,27 @@
-const router = require("express").Router();
+const express = require("express");
+const router = express.Router();
 
 const Project = require("../models/Project");
 
-const auth = require("../middleware/authMiddleware");
-
-
-// CREATE PROJECT
-router.post("/", auth, async (req, res) => {
-
-  try {
-
-    const project = await Project.create({
-      title: req.body.title,
-      description: req.body.description,
-      createdBy: req.user.id
-    });
-
-    res.json(project);
-
-  } catch (err) {
-
-    res.status(500).json(err);
-  }
+router.get("/", async (req, res) => {
+  const projects = await Project.find();
+  res.json(projects);
 });
 
+router.post("/", async (req, res) => {
+  const project = new Project(req.body);
 
-// GET ALL PROJECTS
-router.get("/", auth, async (req, res) => {
+  await project.save();
 
-  try {
+  res.json(project);
+});
 
-    const projects = await Project.find();
+router.delete("/:id", async (req, res) => {
+  await Project.findByIdAndDelete(req.params.id);
 
-    res.json(projects);
-
-  } catch (err) {
-
-    res.status(500).json(err);
-  }
+  res.json({
+    message: "Project Deleted"
+  });
 });
 
 module.exports = router;

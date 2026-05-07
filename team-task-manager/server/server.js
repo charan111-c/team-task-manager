@@ -1,3 +1,4 @@
+const projectRoutes = require("./routes/projectRoutes");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -29,6 +30,8 @@ app.use("/api/projects", require("./routes/projectRoutes"));
 
 
 app.use("/api/tasks", require("./routes/taskRoutes"));
+
+
 
 // SERVER
 app.listen(5000, () => {
