@@ -4,6 +4,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "cd team-task-manager/server && npm start"
+    "startCommand": "cd team-task-manager/server && node server.js"
   }
 }
